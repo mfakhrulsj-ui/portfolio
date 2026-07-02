@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile | Fakhrul Shah</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .profile-section {
+      margin-bottom: 2rem;
+    }
+
+    .profile-section-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .profile-section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(168, 216, 234, 0.15);
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(79, 195, 247, 0.12);
+      border: 1px solid rgba(79, 195, 247, 0.25);
+      color: var(--glacier);
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .badge-success {
+      background: rgba(81, 207, 102, 0.1);
+      border-color: rgba(81, 207, 102, 0.3);
+      color: #69db7c;
+    }
+
+    .badge-gold {
+      background: rgba(255, 212, 59, 0.1);
+      border-color: rgba(255, 212, 59, 0.3);
+      color: #ffd43b;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(168, 216, 234, 0.12);
+    }
+
+    .objective-box {
+      background: linear-gradient(135deg, rgba(79,195,247,0.06), rgba(0,229,255,0.03));
+      border: 1px solid rgba(79,195,247,0.2);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .objective-box::before {
+      content: '"';
+      position: absolute;
+      top: -0.5rem;
+      left: 1rem;
+      font-size: 6rem;
+      font-family: Georgia, serif;
+      color: rgba(79,195,247,0.1);
+      line-height: 1;
+    }
+
+    .objective-box p {
+      color: var(--text-light);
+      line-height: 1.9;
+      font-size: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .achievement-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid rgba(168, 216, 234, 0.08);
+    }
+
+    .achievement-item:last-child { border-bottom: none; }
+
+    .achievement-icon {
+      font-size: 1.8rem;
+      min-width: 42px;
+      text-align: center;
+    }
+
+    .achievement-text h4 {
+      color: var(--frost);
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .achievement-text p {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="snow-canvas"></canvas>
+
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">FK<span>.</span></a>
+    <button class="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="profile.html" class="active">Profile</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="game.html">BMI Calculator</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="hero-content">
+      <div class="hero-badge">Resume & Portfolio</div>
+      <h1 class="hero-title">My <span class="accent">Profile</span></h1>
+      <p style="color:var(--text-muted); font-size:1rem; margin-top:0.5rem;">
+        Education · Skills · Achievements · Career Objective
+      </p>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <section class="section" style="padding-top: 2rem;">
+    <div class="container">
+      <div class="grid-2" style="gap: 2rem;">
+
+        <!-- LEFT COLUMN -->
+        <div>
+
+          <!-- Personal Info -->
+          <div class="card scroll-reveal" style="margin-bottom:2rem;">
+            <div class="profile-section-title">👤 Personal Info</div>
+            <div class="table-wrapper">
+              <table class="resume-table">
+                <tr>
+                  <td class="label-col">Full Name</td>
+                  <td>Muhammad Fakhrul Shah bin Janimansah</td>
+                </tr>
+                <tr>
+                  <td class="label-col">Student ID</td>
+                  <td>DFI2508038</td>
+                </tr>
+                <tr>
+                  <td class="label-col">Class</td>
+                  <td>2D</td>
+                </tr>
+                <tr>
+                  <td class="label-col">Institution</td>
+                  <td>KKTM Petaling Jaya</td>
+                </tr>
+                <tr>
+                  <td class="label-col">Programme</td>
+                  <td>Diploma in Electronic Engineering (IoT)</td>
+                </tr>
+                <tr>
+                  <td class="label-col">Location</td>
+                  <td>Segamat, Johor</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- Technical Skills -->
+          <div class="card scroll-reveal" style="margin-bottom:2rem;">
+            <div class="profile-section-title">⚡ Technical Skills</div>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Arduino / ESP32</span>
+                <span class="skill-percent">85%</span>
+              </div>
+              <div class="skill-bar"><div class="skill-fill" data-width="85%"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">HTML / CSS / JavaScript</span>
+                <span class="skill-percent">78%</span>
+              </div>
+              <div class="skill-bar"><div class="skill-fill" data-width="78%"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">IoT Systems & Sensors</span>
+                <span class="skill-percent">80%</span>
+              </div>
+              <div class="skill-bar"><div class="skill-fill" data-width="80%"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Networking Fundamentals</span>
+                <span class="skill-percent">72%</span>
+              </div>
+              <div class="skill-bar"><div class="skill-fill" data-width="72%"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">Firebase / Cloud IoT</span>
+                <span class="skill-percent">68%</span>
+              </div>
+              <div class="skill-bar"><div class="skill-fill" data-width="68%"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">PHP / MySQL</span>
+                <span class="skill-percent">65%</span>
+              </div>
+              <div class="skill-bar"><div class="skill-fill" data-width="65%"></div></div>
+            </div>
+          </div>
+
+          <!-- Tools & Tech -->
+          <div class="card scroll-reveal">
+            <div class="profile-section-title">🛠 Tools & Technologies</div>
+            <div style="display:flex; flex-wrap:wrap; gap:0.6rem;">
+              <span class="badge">VS Code</span>
+              <span class="badge">PlatformIO</span>
+              <span class="badge">Arduino IDE</span>
+              <span class="badge">Firebase</span>
+              <span class="badge">GitHub</span>
+              <span class="badge">Laragon</span>
+              <span class="badge">MySQL</span>
+              <span class="badge">Chart.js</span>
+              <span class="badge">ESP32</span>
+              <span class="badge">DHT22</span>
+              <span class="badge">RFID RC522</span>
+              <span class="badge">OLED Display</span>
+            </div>
+          </div>
+
+          <!-- Career Objective -->
+          <div class="scroll-reveal">
+            <div class="card" style="padding:0;">
+              <div style="padding: 1.5rem 2rem 1rem;">
+                <div class="profile-section-title">🎯 Career Objective</div>
+              </div>
+              <div style="padding: 0 2rem 2rem;">
+                <div class="objective-box">
+                  <p>
+                    To become a skilled and certified <strong style="color:var(--glacier)">Network Engineer</strong> who 
+                    specializes in designing, implementing, and managing scalable network infrastructures. 
+                    I aim to leverage my background in IoT and embedded systems to bridge traditional 
+                    networking with modern smart technologies — contributing to secure, efficient, and 
+                    future-ready network ecosystems in the industry.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div>
+
+          <!-- Education -->
+          <div class="card scroll-reveal" style="margin-bottom:2rem;">
+            <div class="profile-section-title">🎓 Education & Academic Results</div>
+
+            <!-- Diploma KKTM -->
+            <div style="margin-bottom:1.5rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                <div>
+                  <div style="color:var(--frost); font-weight:700; font-size:0.95rem;">Diploma in Electronic Engineering (IoT)</div>
+                  <div style="color:var(--text-muted); font-size:0.82rem; margin-top:0.2rem;">KKTM Petaling Jaya · 2025 – Present</div>
+                </div>
+                <span class="badge badge-success">Active</span>
+              </div>
+              <div class="table-wrapper">
+                <table class="resume-table">
+                  <thead>
+                    <tr>
+                      <th>Semester</th>
+                      <th>GPA</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Semester 1</td>
+                      <td><strong style="color:var(--glacier);">3.24</strong></td>
+                      <td><span class="badge">Completed</span></td>
+                    </tr>
+                    <tr>
+                      <td>Semester 2</td>
+                      <td><strong style="color:var(--accent);">3.95</strong> <span class="badge badge-gold" style="margin-left:0.4rem; font-size:0.7rem;">Dean's List</span></td>
+                      <td><span class="badge">Completed</span></td>
+                    </tr>
+                    <tr>
+                      <td>Semester 3</td>
+                      <td><strong style="color:var(--text-muted);">—</strong></td>
+                      <td><span class="badge badge-success">Ongoing</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- SPM -->
+            <div style="margin-bottom:1.5rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                <div>
+                  <div style="color:var(--frost); font-weight:700; font-size:0.95rem;">Sijil Pelajaran Malaysia (SPM)</div>
+                  <div style="color:var(--text-muted); font-size:0.82rem; margin-top:0.2rem;">2024</div>
+                </div>
+                <span class="badge">Completed</span>
+              </div>
+              <div class="table-wrapper">
+                <table class="resume-table">
+                  <thead>
+                    <tr>
+                      <th>Grade</th>
+                      <th>Count</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>A</td><td><strong style="color:var(--accent);">1</strong></td></tr>
+                    <tr><td>B+</td><td><strong style="color:var(--glacier);">3</strong></td></tr>
+                    <tr><td>B</td><td><strong style="color:var(--glacier);">1</strong></td></tr>
+                    <tr><td>C+</td><td><strong style="color:var(--text-light);">1</strong></td></tr>
+                    <tr><td>D</td><td><strong style="color:var(--text-muted);">2</strong></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- UPSR -->
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                <div>
+                  <div style="color:var(--frost); font-weight:700; font-size:0.95rem;">Ujian Pencapaian Sekolah Rendah (UPSR)</div>
+                  <div style="color:var(--text-muted); font-size:0.82rem; margin-top:0.2rem;">Primary School Assessment</div>
+                </div>
+                <span class="badge">Completed</span>
+              </div>
+              <div class="table-wrapper">
+                <table class="resume-table">
+                  <thead>
+                    <tr>
+                      <th>Grade</th>
+                      <th>Count</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>B</td><td><strong style="color:var(--glacier);">4</strong></td></tr>
+                    <tr><td>D</td><td><strong style="color:var(--text-muted);">2</strong></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Achievements -->
+          <div class="card scroll-reveal" style="margin-bottom:2rem;">
+            <div class="profile-section-title">🏆 Achievements</div>
+            <div class="achievement-item">
+              <div class="achievement-icon">🥇</div>
+              <div class="achievement-text">
+                <h4>Dean's List <span class="badge badge-gold" style="margin-left:0.5rem;">Academic Excellence</span></h4>
+                <p>Achieved Dean's List recognition for outstanding academic performance at KKTM Petaling Jaya.</p>
+              </div>
+            </div>
+            <div class="achievement-item">
+              <div class="achievement-icon">🔧</div>
+              <div class="achievement-text">
+                <h4>IoT Security Locker System</h4>
+                <p>Developed an RFID-based security locker with ESP32, featuring a web dashboard, Telegram notifications, and ThingSpeak cloud logging.</p>
+              </div>
+            </div>
+            <div class="achievement-item">
+              <div class="achievement-icon">📡</div>
+              <div class="achievement-text">
+                <h4>Room Monitoring System</h4>
+                <p>Built a smart room monitor using HLK-LD2410 mmWave radar, DHT22 sensor, and Firebase Realtime Database integration.</p>
+              </div>
+            </div>
+            <div class="achievement-item">
+              <div class="achievement-icon">🌐</div>
+              <div class="achievement-text">
+                <h4>Web-Based IoT Dashboard</h4>
+                <p>Created a PHP/MySQL monitoring and feedback system with live sensor data charts using Chart.js and ESP32.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Interests -->
+      <div class="card scroll-reveal" style="margin-top:2rem;">
+        <div class="profile-section-title">⛷️ Interests & Hobbies</div>
+        <div class="grid-3" style="margin-top:0.5rem;">
+          <div style="text-align:center; padding:1rem;">
+            <div style="font-size:2.5rem; margin-bottom:0.5rem;">🏃</div>
+            <div style="color:var(--frost); font-weight:600; margin-bottom:0.3rem;">Activities</div>
+            <div style="color:var(--text-muted); font-size:0.85rem;">Badminton, pingpong, hiking, staying active</div>
+          </div>
+          <div style="text-align:center; padding:1rem;">
+            <div style="font-size:2.5rem; margin-bottom:0.5rem;">🔌</div>
+            <div style="color:var(--frost); font-weight:600; margin-bottom:0.3rem;">Electronics</div>
+            <div style="color:var(--text-muted); font-size:0.85rem;">Tinkering with circuits & microcontrollers</div>
+          </div>
+          <div style="text-align:center; padding:1rem;">
+            <div style="font-size:2.5rem; margin-bottom:0.5rem;">🌐</div>
+            <div style="color:var(--frost); font-weight:600; margin-bottom:0.3rem;">Networking Tech</div>
+            <div style="color:var(--text-muted); font-size:0.85rem;">Learning new network protocols & systems</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Muhammad Fakhrul Shah bin Janimansah · Built with ❄️ HTML, CSS & JavaScript</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

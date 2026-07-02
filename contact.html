@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | Fakhrul Shah</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .preview-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--glacier);
+      display: none;
+      margin-top: 0.8rem;
+    }
+
+    .upload-hint {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      margin-top: 0.4rem;
+    }
+
+    .success-banner {
+      display: none;
+      background: linear-gradient(135deg, rgba(81,207,102,0.15), rgba(81,207,102,0.05));
+      border: 1px solid rgba(81,207,102,0.3);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      text-align: center;
+      animation: fadeInUp 0.4s ease;
+    }
+
+    .success-banner h3 {
+      color: #69db7c;
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .success-banner p {
+      color: var(--text-muted);
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .toggle-pw {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0.2rem;
+      transition: var(--transition);
+    }
+
+    .toggle-pw:hover { color: var(--glacier); }
+
+    .strength-bar {
+      height: 4px;
+      border-radius: 4px;
+      background: rgba(168,216,234,0.1);
+      margin-top: 0.5rem;
+      overflow: hidden;
+    }
+
+    .strength-fill {
+      height: 100%;
+      width: 0;
+      border-radius: 4px;
+      transition: width 0.3s ease, background 0.3s ease;
+    }
+
+    .strength-label {
+      font-size: 0.75rem;
+      margin-top: 0.3rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="snow-canvas"></canvas>
+
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">FK<span>.</span></a>
+    <button class="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="profile.html">Profile</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+      <li><a href="game.html">BMI Calculator</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="hero-content">
+      <div class="hero-badge">Let's Connect</div>
+      <h1 class="hero-title">Contact <span class="accent">Me</span></h1>
+      <p style="color:var(--text-muted); font-size:1rem; margin-top:0.5rem;">
+        Fill in the form below — all fields are required.
+      </p>
+    </div>
+  </div>
+
+  <section class="section" style="padding-top: 2rem;">
+    <div class="container">
+      <div class="form-wrapper">
+
+        <!-- SUCCESS STATE -->
+        <div class="success-banner" id="successBanner">
+          <div style="font-size:3rem; margin-bottom:1rem;">✅</div>
+          <h3>Message Sent!</h3>
+          <p>Thanks for reaching out, your submission has been recorded.</p>
+          <button class="btn btn-outline" style="margin-top:1.5rem;" onclick="resetForm()">Send Another</button>
+        </div>
+
+        <!-- CONTACT FORM -->
+        <div id="formContainer" class="card scroll-reveal" style="padding: 2.5rem;">
+          <h3 style="font-family:var(--font-display); color:var(--frost); margin-bottom:2rem; font-size:1.2rem;">
+            📬 Get In Touch
+          </h3>
+
+          <!-- Full Name -->
+          <div class="form-group">
+            <label for="fullname">Full Name <span class="required">*</span></label>
+            <input type="text" id="fullname" class="form-control" placeholder="e.g. Muhammad Fakhrul Shah" />
+            <div class="error-msg" id="err-fullname">Please enter your full name (at least 3 characters).</div>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email">Email Address <span class="required">*</span></label>
+            <input type="email" id="email" class="form-control" placeholder="e.g. fakhrul@email.com" />
+            <div class="error-msg" id="err-email">Please enter a valid email address.</div>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <label for="password">Password <span class="required">*</span></label>
+            <div class="password-wrapper">
+              <input type="password" id="password" class="form-control" placeholder="Min. 8 characters" />
+              <button class="toggle-pw" type="button" onclick="togglePassword()" title="Show/hide password">👁️</button>
+            </div>
+            <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+            <div class="strength-label" id="strengthLabel"></div>
+            <div class="error-msg" id="err-password">Password must be at least 8 characters with letters and numbers.</div>
+          </div>
+
+          <!-- Date of Birth -->
+          <div class="form-group">
+            <label for="dob">Date of Birth <span class="required">*</span></label>
+            <input type="date" id="dob" class="form-control" />
+            <div class="error-msg" id="err-dob">Please enter a valid date of birth. You must be at least 10 years old.</div>
+          </div>
+
+          <!-- Gender -->
+          <div class="form-group">
+            <label>Gender <span class="required">*</span></label>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" name="gender" value="male" /> Male
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="gender" value="female" /> Female
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="gender" value="other" /> Prefer not to say
+              </label>
+            </div>
+            <div class="error-msg" id="err-gender">Please select a gender.</div>
+          </div>
+
+          <!-- Profile Photo -->
+          <div class="form-group">
+            <label for="photo">Profile Photo <span class="required">*</span></label>
+            <input type="file" id="photo" class="form-control" accept="image/*" onchange="previewPhoto(this)" />
+            <p class="upload-hint">Accepted formats: JPG, PNG, GIF, WEBP (max 5MB)</p>
+            <img id="photoPreview" class="preview-img" alt="Photo Preview" />
+            <div class="error-msg" id="err-photo">Please upload a profile photo (image files only, max 5MB).</div>
+          </div>
+
+          <!-- T&C -->
+          <div class="form-group">
+            <label>Terms & Conditions <span class="required">*</span></label>
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="terms" />
+                I agree to the <a href="#" style="color:var(--glacier);">Terms and Conditions</a> and Privacy Policy.
+              </label>
+            </div>
+            <div class="error-msg" id="err-terms">You must agree to the terms and conditions.</div>
+          </div>
+
+          <button class="btn btn-primary" style="width:100%; justify-content:center; padding:1rem;" onclick="validateForm()">
+            Submit Form →
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Muhammad Fakhrul Shah bin Janimansah · Built with ❄️ HTML, CSS & JavaScript</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // ===== PHOTO PREVIEW =====
+    function previewPhoto(input) {
+      const preview = document.getElementById('photoPreview');
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          preview.src = e.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    // ===== TOGGLE PASSWORD =====
+    function togglePassword() {
+      const pw = document.getElementById('password');
+      pw.type = pw.type === 'password' ? 'text' : 'password';
+    }
+
+    // ===== PASSWORD STRENGTH =====
+    document.getElementById('password').addEventListener('input', function () {
+      const val = this.value;
+      const fill = document.getElementById('strengthFill');
+      const label = document.getElementById('strengthLabel');
+
+      let strength = 0;
+      if (val.length >= 8) strength++;
+      if (/[A-Z]/.test(val)) strength++;
+      if (/[0-9]/.test(val)) strength++;
+      if (/[^A-Za-z0-9]/.test(val)) strength++;
+
+      const widths = ['0%', '25%', '50%', '75%', '100%'];
+      const colors = ['transparent', '#ff6b6b', '#ffd43b', '#74c0fc', '#51cf66'];
+      const labels = ['', 'Weak', 'Fair', 'Good', 'Strong'];
+
+      fill.style.width = widths[strength];
+      fill.style.background = colors[strength];
+      label.textContent = val.length ? `Strength: ${labels[strength]}` : '';
+    });
+
+    // ===== HELPERS =====
+    function setError(field, errId, show) {
+      const el = document.getElementById(field);
+      const err = document.getElementById(errId);
+      el.classList.toggle('error', show);
+      el.classList.toggle('success', !show && el.value);
+      err.classList.toggle('show', show);
+      return !show;
+    }
+
+    function setRadioError(name, errId, show) {
+      document.getElementById(errId).classList.toggle('show', show);
+      return !show;
+    }
+
+    // ===== VALIDATION =====
+    function validateForm() {
+      let valid = true;
+
+      // Full Name
+      const name = document.getElementById('fullname').value.trim();
+      if (!setError('fullname', 'err-fullname', name.length < 3)) valid = false;
+
+      // Email
+      const email = document.getElementById('email').value.trim();
+      const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!setError('email', 'err-email', !emailRx.test(email))) valid = false;
+
+      // Password
+      const pw = document.getElementById('password').value;
+      const pwValid = pw.length >= 8 && /[a-zA-Z]/.test(pw) && /[0-9]/.test(pw);
+      if (!setError('password', 'err-password', !pwValid)) valid = false;
+
+      // Date of Birth
+      const dob = document.getElementById('dob').value;
+      let dobValid = false;
+      if (dob) {
+        const dobDate = new Date(dob);
+        const today = new Date();
+        const age = (today - dobDate) / (1000 * 60 * 60 * 24 * 365.25);
+        dobValid = age >= 10 && age <= 100;
+      }
+      if (!setError('dob', 'err-dob', !dobValid)) valid = false;
+
+      // Gender
+      const gender = document.querySelector('input[name="gender"]:checked');
+      if (!setRadioError('gender', 'err-gender', !gender)) valid = false;
+      else setRadioError('gender', 'err-gender', false);
+
+      // Photo
+      const photo = document.getElementById('photo');
+      const photoFile = photo.files[0];
+      let photoValid = false;
+      if (photoFile) {
+        const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        photoValid = validTypes.includes(photoFile.type) && photoFile.size <= 5 * 1024 * 1024;
+      }
+      if (!setError('photo', 'err-photo', !photoValid)) valid = false;
+
+      // Terms
+      const terms = document.getElementById('terms').checked;
+      document.getElementById('err-terms').classList.toggle('show', !terms);
+      if (!terms) valid = false;
+
+      if (valid) {
+        document.getElementById('formContainer').style.display = 'none';
+        document.getElementById('successBanner').style.display = 'block';
+        window.scrollTo({ top: 400, behavior: 'smooth' });
+      } else {
+        // Scroll to first error
+        const firstErr = document.querySelector('.form-control.error, input[type="file"].error');
+        if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    // ===== RESET =====
+    function resetForm() {
+      document.getElementById('formContainer').style.display = 'block';
+      document.getElementById('successBanner').style.display = 'none';
+      document.querySelectorAll('.form-control').forEach(el => {
+        el.value = '';
+        el.classList.remove('error', 'success');
+      });
+      document.querySelectorAll('input[name="gender"]').forEach(r => r.checked = false);
+      document.getElementById('terms').checked = false;
+      document.querySelectorAll('.error-msg').forEach(e => e.classList.remove('show'));
+      document.getElementById('photoPreview').style.display = 'none';
+      document.getElementById('strengthFill').style.width = '0';
+      document.getElementById('strengthLabel').textContent = '';
+    }
+
+    // ===== LIVE VALIDATION =====
+    document.getElementById('fullname').addEventListener('blur', function () {
+      setError('fullname', 'err-fullname', this.value.trim().length < 3);
+    });
+    document.getElementById('email').addEventListener('blur', function () {
+      setError('email', 'err-email', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value.trim()));
+    });
+    document.getElementById('dob').addEventListener('change', function () {
+      const dobDate = new Date(this.value);
+      const age = (new Date() - dobDate) / (1000 * 60 * 60 * 24 * 365.25);
+      setError('dob', 'err-dob', !(age >= 10 && age <= 100));
+    });
+  </script>
+</body>
+</html>
